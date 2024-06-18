@@ -1,0 +1,6 @@
+@slavagmBackend_HostAddress = http://localhost:5226
+
+GET {{slavagmBackend_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

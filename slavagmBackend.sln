@@ -1,0 +1,16 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "slavagmBackend", "slavagmBackend.csproj", "{AA95E9B8-E1F4-4D9E-9B7B-39DF7A51DC3A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AA95E9B8-E1F4-4D9E-9B7B-39DF7A51DC3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA95E9B8-E1F4-4D9E-9B7B-39DF7A51DC3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA95E9B8-E1F4-4D9E-9B7B-39DF7A51DC3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA95E9B8-E1F4-4D9E-9B7B-39DF7A51DC3A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
