@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using slavagmBackend.Entities;
 using slavagmBackend.Models;
@@ -24,6 +25,7 @@ public class CardsController : ControllerBase
     }
 
     [HttpPost("create")]
+    [Authorize]
     public async Task<IActionResult> CreateCard([FromBody] CreateCard card)
     {
         var newCard = new Card
@@ -38,6 +40,7 @@ public class CardsController : ControllerBase
     }
 
     [HttpDelete("delete/{id:int?}")]
+    [Authorize]
     public async Task<IActionResult> DeleteCard([FromRoute] int id)
     {
         var card = await _cardRepository.GetByIdAsync(id);
@@ -46,6 +49,7 @@ public class CardsController : ControllerBase
     }
 
     [HttpPut("edit")]
+    [Authorize]
     public async Task<IActionResult> EditCard([FromBody] EditCard card)
     {
         var cardDb = await _cardRepository.GetByIdAsync(card.Id);
