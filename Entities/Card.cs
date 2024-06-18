@@ -3,11 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace slavagmBackend.Entities;
 
-public class Card
+public class Card : BaseEntity
 {
-    [Key]
-    [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-    public int Id { get; set; }
     public required string Title { get; set; }
     public required string Description { get; set; }
     public string? Link { get; set; }
