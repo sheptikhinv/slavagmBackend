@@ -12,14 +12,14 @@ public class CardRepository : ICardRepository
         _context = context;
     }
 
-    public async Task<List<Card?>> GetAllAsync()
+    public async Task<List<Card>> GetAllAsync()
     {
         return await _context.Cards.ToListAsync();
     }
 
-    public async Task<Card?> GetByIdAsync(int id)
+    public async Task<Card> GetByIdAsync(int id)
     {
-        return await _context.Cards.FirstOrDefaultAsync(card => card != null && card.Id == id);
+        return await _context.Cards.FirstOrDefaultAsync(card => card.Id == id) ?? throw new InvalidOperationException();
     }
 
     public async Task<int> AddAsync(Card card)

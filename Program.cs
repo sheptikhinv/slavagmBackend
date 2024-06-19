@@ -81,6 +81,8 @@ public class Program
                 builder.Configuration.GetConnectionString("SqliteConnection"))); // TODO: мб когда-нибудь PostgreSQL
 
         builder.Services.AddScoped<ICardRepository, CardRepository>();
+        builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+        builder.Services.AddScoped<ISkillService, SkillService>();
 
         builder.Services.AddControllers();
 
