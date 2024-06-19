@@ -23,7 +23,8 @@ public class SkillService : ISkillService
         var skillDb = new Skill
         {
             Title = skill.Title,
-            Priority = skill.Priority
+            Priority = skill.Priority,
+            Parent = skill.ParentId == 0 ? null : await GetSkillByIdAsync(skill.ParentId)
         };
         return await _skillRepository.AddSkillAsync(skillDb);
     }
@@ -34,7 +35,8 @@ public class SkillService : ISkillService
         {
             Id = skill.Id,
             Title = skill.Title,
-            Priority = skill.Priority
+            Priority = skill.Priority,
+            Parent = skill.ParentId == 0 ? null : await GetSkillByIdAsync(skill.ParentId)
         };
         return await _skillRepository.EditSkillAsync(skillDb);
     }
@@ -45,45 +47,13 @@ public class SkillService : ISkillService
         await _skillRepository.DeleteSkillAsync(await skillDb);
     }
 
-    public async Task<SkillChild> GetChildSkillByIdAsync(int id)
-    {
-        return await _skillRepository.GetChildSkillByIdAsync(id);
-    }
-
-    public async Task<int> AddChildSkillAsync(AddChild skill)
-    {
-        var parent = _skillRepository.GetSkillByIdAsync(skill.ParentId);
-        var skillDb = new SkillChild
-        {
-            Skill = await parent,
-            // ParentId = skill.ParentId,
-            Title = skill.Title,
-            Priority = skill.Priority
-        };
-        return await _skillRepository.AddChildSkillAsync(skillDb);
-    }
-
-    public async Task<SkillChild> EditChildSkillAsync(UpdateChild skill)
-    {
-        var parent = _skillRepository.GetSkillByIdAsync(skill.ParentId);
-        var skillDb = new SkillChild
-        {
-            Id = skill.Id,
-            Skill = await parent,
-            Title = skill.Title,
-            Priority = skill.Priority
-        };
-        return await _skillRepository.EditChildSkillAsync(skillDb);
-    }
-
-    public async Task DeleteChildSkillAsync(int id)
-    {
-        var skillDb = await _skillRepository.GetChildSkillByIdAsync(id);
-        await _skillRepository.DeleteChildSkillAsync(skillDb);
-    }
-
     public async Task<List<Skill>> GetAllAsync()
     {
         return await _skillRepository.GetAllAsync();
+    }
+
+    public async Task<List<Skill>> GetTopLevelAsync()
+    {
+        return await _skillRepository.GetTopLevelAsync();
     }
 }
