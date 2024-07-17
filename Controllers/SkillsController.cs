@@ -28,4 +28,19 @@ public class SkillsController : ControllerBase
     {
         return Ok(await _skillService.AddSkillAsync(skill));
     }
+
+    [HttpDelete("delete/{id:int}")]
+    [Authorize]
+    public async Task<IActionResult> DeleteSkill([FromRoute] int id)
+    {
+        await _skillService.DeleteSkillAsync(id);
+        return Ok();
+    }
+
+    [HttpPut("update")]
+    [Authorize]
+    public async Task<IActionResult> UpdateSkill(UpdateSkill skill)
+    {
+        return Ok(await _skillService.EditSkillAsync(skill));
+    }
 }
