@@ -24,7 +24,7 @@ public class SkillsController : ControllerBase
 
     [HttpPost("add")]
     [Authorize]
-    public async Task<IActionResult> AddSkill(CreateSkill skill)
+    public async Task<IActionResult> AddSkill([FromBody] CreateSkill skill)
     {
         return Ok(await _skillService.AddSkillAsync(skill));
     }
@@ -39,7 +39,7 @@ public class SkillsController : ControllerBase
 
     [HttpPut("update")]
     [Authorize]
-    public async Task<IActionResult> UpdateSkill(UpdateSkill skill)
+    public async Task<IActionResult> UpdateSkill([FromBody] UpdateSkill skill)
     {
         return Ok(await _skillService.EditSkillAsync(skill));
     }
