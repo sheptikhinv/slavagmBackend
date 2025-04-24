@@ -22,7 +22,7 @@ public class AuthController : Controller
     [HttpPost("login")]
     [ProducesResponseType(StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(StatusCodes.Status200OK)]
-    public async Task<IActionResult> Login([FromBody] LoginRequest data)
+    public async Task<IActionResult> Login([FromBody] LoginRequestDto data)
     {
         var token = await _authService.Login(data.Password);
         return Ok(new { token = token });
