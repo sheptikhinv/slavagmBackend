@@ -29,9 +29,9 @@ public class CardRepository(ApplicationDbContext context) : ICardRepository
         await context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Card entity)
+    public async Task DeleteAsync(long id)
     {
-        context.Cards.Remove(entity);
+        await context.Cards.Where(c => c.Id == id).ExecuteDeleteAsync();
         await context.SaveChangesAsync();
     }
 }

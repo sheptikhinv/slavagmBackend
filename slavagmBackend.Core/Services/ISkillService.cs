@@ -8,6 +8,6 @@ public interface ISkillService
     public Task<IEnumerable<Skill>> GetAllAsync();
     public Task AddAsync(Skill skill);
     public Task UpdateAsync(Skill skill);
-    public Task DeleteAsync(Skill skill);
+    public Task DeleteAsync(long id);
     public Task<IEnumerable<Skill>> GetTopLevelAsync();
 }

@@ -37,9 +37,9 @@ public class SkillRepository : ISkillRepository
         await _context.SaveChangesAsync();
     }
 
-    public async Task DeleteAsync(Skill entity)
+    public async Task DeleteAsync(long id)
     {
-        _context.Skills.Remove(entity);
+        await _context.Skills.Where(s => s.Id == id).ExecuteDeleteAsync();
         await _context.SaveChangesAsync();
     }
 

@@ -35,9 +35,9 @@ public class SkillService(ISkillRepository skillRepository) : ISkillService
         await _skillRepository.UpdateAsync(skill);
     }
 
-    public async Task DeleteAsync(Skill skill)
+    public async Task DeleteAsync(long id)
     {
-        await _skillRepository.DeleteAsync(skill);
+        await _skillRepository.DeleteAsync(id);
     }
 
     public async Task<IEnumerable<Skill>> GetTopLevelAsync()

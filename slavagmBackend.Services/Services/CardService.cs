@@ -35,8 +35,8 @@ public class CardService(ICardRepository cardRepository) : ICardService
         await _cardRepository.UpdateAsync(card);
     }
 
-    public async Task DeleteAsync(Card card)
+    public async Task DeleteAsync(long id)
     {
-        await _cardRepository.DeleteAsync(card);
+        await _cardRepository.DeleteAsync(id);
     }
 }
