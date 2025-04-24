@@ -1,10 +1,15 @@
+using System.Text.Json.Serialization;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using slavagmBackend.API.Middlewares;
+using slavagmBackend.Core.Repositories;
+using slavagmBackend.Core.Services;
 using slavagmBackend.Infrastructure.Data;
+using slavagmBackend.Infrastructure.Repositories;
 using slavagmBackend.Services;
+using slavagmBackend.Services.Services;
 
 namespace slavagmBackend.API;
 
@@ -15,6 +20,17 @@ public class Program
         var builder = WebApplication.CreateBuilder(args);
         
         AuthOptions.MakeOptions(builder.Configuration);
+        
+        builder.Services.AddDbContext<ApplicationDbContext>(options =>
+            options.UseSqlite(
+                builder.Configuration.GetConnectionString("SqliteConnection")));
+
+        builder.Services.AddScoped<ICardRepository, CardRepository>();
+        builder.Services.AddScoped<ISkillRepository, SkillRepository>();
+        
+        builder.Services.AddScoped<ICardService, CardService>();
+        builder.Services.AddScoped<ISkillService, SkillService>();
+        builder.Services.AddScoped<IAuthService, AuthService>();
 
         // Add services to the container.
         builder.Services.AddAuthorization();
@@ -36,6 +52,12 @@ public class Program
                     ValidateIssuerSigningKey = true,
                 };
             });
+        
+        builder.Services.AddControllers().AddJsonOptions(opts =>
+        {
+            opts.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+        });
+
 
         // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
         builder.Services.AddEndpointsApiExplorer();
@@ -65,11 +87,6 @@ public class Program
                 }
             });
         });
-
-        
-        builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite(
-                builder.Configuration.GetConnectionString("SqliteConnection")));
 
         var app = builder.Build();
 

@@ -1,4 +1,5 @@
 using slavagmBackend.Core.Services;
+using slavagmBackend.Services.Exceptions;
 using slavagmBackend.Services.Helpers;
 
 namespace slavagmBackend.Services.Services;
@@ -9,7 +10,7 @@ public class AuthService : IAuthService
     {
         if (string.IsNullOrEmpty(password) || password != AuthOptions.AdminPassword)
         {
-            throw new UnauthorizedAccessException("Invalid password");
+            throw new UnauthorizedException("Invalid password");
         }
 
         return TokenHelper.CreateToken();
