@@ -1,11 +1,12 @@
 using slavagmBackend.Core.Models;
+using slavagmBackend.Core.Repositories;
 using slavagmBackend.Core.Services;
 
 namespace slavagmBackend.Services.Services;
 
-public class SkillService(ISkillService skillService) : ISkillService
+public class SkillService(ISkillRepository skillRepository) : ISkillService
 {
-    private readonly ISkillService _skillService = skillService;
+    private readonly ISkillRepository _skillRepository = skillRepository;
 
     public async Task<Skill> GetByIdAsync(long id)
     {
