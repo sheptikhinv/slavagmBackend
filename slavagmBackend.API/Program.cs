@@ -18,16 +18,16 @@ public class Program
     public static void Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
-        
+
         AuthOptions.MakeOptions(builder.Configuration);
-        
+
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlite(
                 builder.Configuration.GetConnectionString("SqliteConnection")));
 
         builder.Services.AddScoped<ICardRepository, CardRepository>();
         builder.Services.AddScoped<ISkillRepository, SkillRepository>();
-        
+
         builder.Services.AddScoped<ICardService, CardService>();
         builder.Services.AddScoped<ISkillService, SkillService>();
         builder.Services.AddScoped<IAuthService, AuthService>();
@@ -42,17 +42,17 @@ public class Program
                 {
                     ValidateIssuer = true,
                     ValidIssuer = AuthOptions.Issuer,
-                    
+
                     ValidateAudience = true,
                     ValidAudience = AuthOptions.Audience,
 
                     ValidateLifetime = true,
-                    
+
                     IssuerSigningKey = AuthOptions.SymmetricSecurityKey,
                     ValidateIssuerSigningKey = true,
                 };
             });
-        
+
         builder.Services.AddControllers().AddJsonOptions(opts =>
         {
             opts.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
@@ -88,6 +88,19 @@ public class Program
             });
         });
 
+        builder.Services.AddCors(options =>
+        {
+            options.AddPolicy("AllowAll",
+                policyBuilder =>
+                {
+                    policyBuilder
+                        .AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .SetIsOriginAllowedToAllowWildcardSubdomains();
+                });
+        });
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -99,15 +112,17 @@ public class Program
                 options.SwaggerEndpoint("/api/swagger/v1/swagger.json", "Survey Backend V1");
                 options.RoutePrefix = "api/swagger";
             });
+            
+            app.UseCors("AllowAll");
         }
-        
+
         app.UseMiddleware<ExceptionsMiddleware>();
 
         app.UseAuthentication();
         app.UseAuthorization();
-        
+
         app.MapControllers();
-        
+
         app.Run();
     }
 }
